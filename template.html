@@ -1,0 +1,727 @@
+<title>Osamudiamen Imasuen Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
+<style>
+@font-face { font-family: "Delight"; src: url(data:font/ttf;base64,{{DELIGHT}}) format("truetype"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fat"; src: url(data:font/otf;base64,{{FAT}}) format("opentype"); font-weight: 900; font-style: normal; font-display: swap; }
+
+/* Layout: Mudia's own system. A 12-column frame (30px margin, 20px gutter) on pure
+   black; light uppercase Delight with one word in Fat; a big selected-work list with
+   a preview that trails the cursor; project pages on a 5fr/4fr split with /NN indexes. */
+:root {
+  --bg: #000000;
+  --fg: #ffffff;
+  --fg-75: rgba(255, 255, 255, .75);
+  --fg-60: rgba(255, 255, 255, .6);
+  --fg-50: rgba(255, 255, 255, .5);
+  --fg-35: rgba(255, 255, 255, .35);
+  --rule: rgba(255, 255, 255, .14);
+  --yellow: #e5ca00;
+  --panel: #0f0f0f;
+  --sec: #ff8a80; --prod: #e5ca00; --proc: #8ab4ff; --lay: #9bd98a;
+  --cmyk-k: #1a1a1a; --cmyk-y: #fff200; --cmyk-m: #ec008c; --cmyk-c: #00aeef;
+  /* KayKav product colours */
+  --kk-blue: #295898; --kk-navy: #1c3a66; --kk-rule: #3a6cae; --kk-gold: #fdc97a;
+  --kk-ink: #ffffff; --kk-muted: #c3d4ea; --kk-black: #000000; --kk-video: #0b1424;
+
+  --sans: "Delight", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fat: "Fat", "Delight", system-ui, sans-serif;
+  --serif: "Didot", "Bodoni MT", "Playfair Display", Georgia, "Times New Roman", serif;
+  --m: 30px;
+  --g: 20px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
+h1, h2, h3, p, ul, figure, blockquote { margin: 0; }
+p { text-wrap: pretty; }
+.frame { max-width: 1920px; margin: 0 auto; padding-left: max(var(--m), env(safe-area-inset-left, 0px)); padding-right: max(var(--m), env(safe-area-inset-right, 0px)); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.tn { font-variant-numeric: tabular-nums; }
+.cmyk { display: inline-flex; height: 14px; }
+.cmyk i { width: 24px; height: 14px; display: block; }
+.cmyk i:nth-child(1) { background: var(--cmyk-k); } .cmyk i:nth-child(2) { background: var(--cmyk-y); } .cmyk i:nth-child(3) { background: var(--cmyk-m); } .cmyk i:nth-child(4) { background: var(--cmyk-c); }
+
+/* ============ HOME ============ */
+.home { min-height: 100svh; display: flex; flex-direction: column; padding-block: 26px 30px; }
+.home-grid { flex: 1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: start; }
+.headline { grid-column: 1 / span 5; font-weight: 300; font-size: clamp(30px, 3.23vw, 62px); line-height: 1; text-transform: uppercase; }
+.headline .fat { font-family: var(--fat); font-weight: 900; }
+.work { grid-column: 6 / span 5; position: relative; z-index: 10; }
+.label { font-weight: 700; font-size: clamp(11px, .99vw, 19px); letter-spacing: .05em; text-transform: uppercase; margin-bottom: .6em; }
+.work-list { list-style: none; padding: 0; font-weight: 400; font-size: clamp(30px, 4.1vw, 80px); line-height: 1.13; }
+.work-list li { transition: transform .35s cubic-bezier(.2, .9, .3, 1.2), opacity .25s; }
+.work-list:hover li { opacity: .35; }
+.work-list li:hover, .work-list li.on { opacity: 1; transform: translateX(28px); }
+.work-list a, .work-list span.item { text-decoration: none; cursor: pointer; display: inline-flex; align-items: flex-start; gap: .25em; }
+.work-list sup { font-size: max(11px, .17em); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; line-height: 1; margin-top: .55em; }
+.work-list sup.ready { color: var(--yellow); }
+.work-list sup.soon { color: var(--fg-50); }
+.portrait { grid-column: 12 / span 1; width: 100%; height: auto; aspect-ratio: 604 / 821; object-fit: cover; display: block; justify-self: end; }
+.home-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-top: 36px; }
+.clock { color: var(--yellow); font-weight: 500; font-size: clamp(11px, .83vw, 16px); letter-spacing: .03em; text-transform: uppercase; }
+.home-foot .right { display: flex; align-items: center; gap: 18px; font-size: 13px; font-weight: 500; }
+.home-foot .right a { text-decoration: none; }
+.home-foot .right a:hover { color: var(--yellow); }
+
+/* cursor-trailing preview (pointer devices only) */
+.preview { position: fixed; top: 0; left: 0; width: min(26vw, 420px); aspect-ratio: 5 / 7; max-width: 100%; pointer-events: none; z-index: 5; opacity: 0; transform: translate(-50%, -50%) scale(.96); transition: opacity .2s, transform .2s; }
+.preview.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.pv { position: absolute; inset: 0; display: none; }
+.pv.on { display: flex; }
+.pv-kk { background: var(--kk-blue); flex-direction: column; justify-content: center; gap: 14px; padding: 9%; }
+.pv-soon { background: #111; border: 1px solid var(--rule); flex-direction: column; justify-content: space-between; padding: 8%; }
+.pv-soon b { font-weight: 300; font-size: clamp(28px, 2.6vw, 48px); line-height: 1; text-transform: uppercase; }
+.pv-soon span { color: var(--yellow); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.pv-soon em { font-style: normal; color: var(--fg-60); font-size: 14px; }
+
+/* ============ PROJECT PAGE ============ */
+.project { padding-block: 26px 0; }
+.topbar { display: grid; grid-template-columns: 3fr 2fr 4fr 3fr; gap: var(--g); align-items: start; font-size: 13px; font-weight: 500; letter-spacing: .01em; }
+.topbar a { text-decoration: none; }
+.topbar a:hover { color: var(--yellow); }
+.brand { font-weight: 700; font-size: 14px; }
+.brand sup { font-size: 8px; }
+.stack { display: flex; flex-direction: column; gap: 2px; }
+.dim { color: var(--fg-60); }
+.contact { justify-self: end; }
+.heading { display: grid; grid-template-columns: 5fr 4fr; gap: var(--g); align-items: end; margin-top: 56px; }
+.number { font-size: 40px; font-weight: 300; color: var(--fg-35); margin-bottom: 8px; }
+.title { font-size: clamp(40px, 4.5vw, 84px); font-weight: 500; line-height: 1.02; letter-spacing: -.01em; }
+.meta { display: grid; grid-template-columns: 1fr 1fr auto; gap: var(--g); align-items: end; font-size: 13px; }
+.meta-label { color: var(--fg-50); margin-bottom: 3px; }
+.cta { justify-self: end; padding: 9px 16px; border: 1px solid rgba(255,255,255,.4); border-radius: 3px; text-decoration: none; font-weight: 500; white-space: nowrap; transition: border-color .15s, color .15s; background: transparent; color: var(--fg); font-family: var(--sans); font-size: 13px; cursor: pointer; }
+.cta:hover { border-color: var(--yellow); color: var(--yellow); }
+
+/* hero composition */
+.hero { margin-top: 28px; background: var(--kk-blue); padding: clamp(18px, 3.4vw, 64px); display: grid; grid-template-columns: 2.1fr 1fr 1fr; gap: clamp(12px, 1.6vw, 28px); align-items: center; position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(var(--kk-rule) 1px, transparent 1px), linear-gradient(90deg, var(--kk-rule) 1px, transparent 1px); background-size: 48px 48px; opacity: .35; pointer-events: none; }
+.hero > * { position: relative; }
+.hero .kk { box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+.hero-tag { position: absolute; left: clamp(18px, 3.4vw, 64px); bottom: 12px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--kk-muted); }
+
+.intro-row { display: grid; grid-template-columns: 5fr 4fr; gap: var(--g); margin-top: 22px; }
+.location { font-size: 12.5px; line-height: 1.5; color: var(--fg-60); }
+.intro { font-size: 15px; line-height: 1.6; color: var(--fg-75); display: grid; gap: 14px; }
+
+.numbers { margin-top: 64px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--g); border-top: 1px solid var(--rule); padding-top: 18px; }
+.numbers b { display: block; font-weight: 300; font-size: clamp(36px, 3.6vw, 68px); line-height: 1; letter-spacing: -.01em; }
+.numbers span { display: block; margin-top: 10px; font-size: 13px; line-height: 1.45; color: var(--fg-50); max-width: 18em; }
+
+.body { margin-top: 40px; display: flex; flex-direction: column; }
+.section { display: grid; grid-template-columns: 5fr 4fr; gap: var(--g); padding-block: clamp(64px, 9vh, 120px) 0; }
+.side { align-self: start; }
+.idx { font-size: 28px; font-weight: 300; color: var(--fg-35); margin-bottom: 6px; }
+.kicker { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--yellow); }
+.main h2 { font-size: clamp(26px, 2.4vw, 40px); font-weight: 500; line-height: 1.12; letter-spacing: -.01em; margin-bottom: 18px; text-wrap: balance; }
+.main p { font-size: 16px; line-height: 1.62; color: var(--fg-75); margin-bottom: 14px; }
+.main p em { font-style: italic; }
+.main ul { list-style: none; padding: 0; margin-top: 18px; }
+.main li { padding: 12px 0; border-top: 1px solid var(--rule); font-size: 15px; line-height: 1.55; color: var(--fg-75); }
+.main li strong { color: var(--fg); font-weight: 600; }
+.main li .like { display: block; margin-top: 4px; color: var(--fg-50); font-style: italic; }
+.main li .from { display: block; margin-top: 4px; color: var(--yellow); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.quote { margin: 26px 0 22px; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(26px, 2.4vw, 40px); line-height: 1.18; color: var(--fg); }
+.quote cite { display: block; margin-top: 12px; font-family: var(--sans); font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-50); }
+.fig { grid-column: 1 / -1; margin-top: 34px; min-width: 0; }
+.fig figcaption { margin-top: 10px; font-size: 12.5px; color: var(--fg-50); }
+
+/* build activity */
+.bars { position: relative; height: 160px; display: flex; align-items: flex-end; gap: 2px; border-bottom: 1px solid var(--fg-60); }
+.bars i { flex: 1; min-width: 0; background: var(--yellow); display: block; }
+.bars i.zero { background: var(--rule); height: 2px !important; }
+.bars .peak { position: absolute; bottom: 100%; transform: translateY(-4px); font-size: 12px; color: var(--fg-75); white-space: nowrap; }
+.axis { position: relative; height: 18px; margin-top: 8px; font-size: 12px; color: var(--fg-50); }
+.axis span { position: absolute; top: 0; }
+
+/* tiles strip */
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.tile { background: var(--panel); aspect-ratio: 4 / 5; max-width: 100%; display: flex; align-items: center; justify-content: center; padding: 10% 10% 16%; position: relative; overflow: hidden; }
+.tile span.cap { position: absolute; left: 0; right: 0; bottom: 6%; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-50); }
+.tile .kk { width: 100%; }
+
+/* KayKav mock screens */
+.kk { background: var(--kk-blue); color: var(--kk-ink); border-radius: 4px; overflow: hidden; font-family: var(--sans); }
+.kk.flat { background: transparent; }
+.kk-bar { display: flex; justify-content: space-between; gap: 8px; padding: 9px 12px; font-size: 11.5px; color: var(--kk-muted); border-bottom: 1px solid var(--kk-rule); background: var(--kk-blue); }
+.kk-bar b { color: var(--kk-ink); font-weight: 600; }
+.kk-video { background: var(--kk-video); aspect-ratio: 16 / 8; max-width: 100%; display: grid; place-items: center; }
+.kk-play { width: 52px; height: 52px; background: var(--kk-gold); color: var(--kk-black); display: grid; place-items: center; font-size: 18px; border-radius: 2px; }
+.kk-ctrl { display: flex; gap: 8px; align-items: center; padding: 9px 11px; background: var(--kk-video); }
+.kk-sq { width: 28px; height: 28px; background: var(--kk-gold); color: var(--kk-black); display: grid; place-items: center; font-size: 11px; border-radius: 2px; flex: none; }
+.kk-scrub { flex: 1; height: 5px; background: var(--kk-rule); position: relative; min-width: 0; }
+.kk-scrub::after { content: ""; position: absolute; inset: 0 64% 0 0; background: var(--kk-gold); }
+.kk-tc { font-size: 10.5px; color: var(--kk-muted); white-space: nowrap; }
+.kk-body { padding: 13px; display: grid; gap: 9px; background: var(--kk-blue); }
+.kk-h { font-size: 14.5px; font-weight: 600; line-height: 1.25; }
+.kk-small { font-size: 11.5px; color: var(--kk-muted); line-height: 1.45; }
+.kk-row { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 9px; align-items: center; padding: 8px 9px; background: var(--kk-navy); font-size: 12.5px; }
+.kk-row .ic { width: 20px; height: 20px; border: 1px solid var(--kk-rule); display: grid; place-items: center; font-size: 9px; color: var(--kk-gold); }
+.kk-row.on { outline: 1px solid var(--kk-gold); }
+.kk-row .ok { color: var(--kk-gold); font-size: 12px; }
+.kk-progress { height: 4px; background: var(--kk-navy); }
+.kk-progress span { display: block; height: 100%; width: 60%; background: var(--kk-gold); }
+.kk-opt { padding: 8px 10px; border: 1px solid var(--kk-rule); font-size: 12.5px; }
+.kk-opt.pick { border-color: var(--kk-gold); background: var(--kk-navy); }
+.kk-badge { justify-self: start; background: var(--kk-gold); color: var(--kk-black); font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 2px; }
+.kk-btn { background: var(--kk-gold); color: var(--kk-black); font-weight: 600; font-size: 12.5px; padding: 9px; text-align: center; border-radius: 2px; }
+.kk-btn.ghost { background: transparent; color: var(--kk-ink); border: 1px solid var(--kk-muted); }
+.kk-cert { background: var(--kk-navy); padding: 18px 14px; display: grid; gap: 9px; text-align: center; border-top: 3px solid var(--kk-gold); }
+.kk-cert .rule { height: 1px; background: var(--kk-gold); opacity: .6; }
+.kk-cert .big { font-size: 19px; font-weight: 600; }
+
+/* scrub demo */
+.demo { background: var(--kk-navy); color: var(--kk-ink); padding: clamp(18px, 3vw, 32px); border-radius: 4px; max-width: 980px; }
+.demo-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.demo-head h3 { font-weight: 500; font-size: 24px; }
+.demo-head span { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--kk-gold); }
+.demo .hint { margin-top: 8px; font-size: 15px; line-height: 1.55; color: var(--kk-muted); max-width: 62ch; }
+.screen { margin-top: 18px; aspect-ratio: 16 / 6; max-width: 100%; background: var(--kk-video); position: relative; display: grid; place-items: center; }
+.screen .t { font-weight: 300; font-size: clamp(30px, 5vw, 60px); color: var(--kk-ink); font-variant-numeric: tabular-nums; }
+.screen .t small { font-size: .42em; color: var(--kk-muted); }
+.done { position: absolute; top: 12px; right: 12px; font-size: 12px; font-weight: 600; padding: 5px 9px; background: var(--kk-gold); color: var(--kk-black); border-radius: 2px; }
+.controls { margin-top: 12px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
+.btn44 { width: 44px; height: 44px; background: var(--kk-gold); color: var(--kk-black); border: 0; border-radius: 2px; font-size: 16px; cursor: pointer; }
+.btn44:hover { background: var(--kk-ink); }
+.track { position: relative; }
+.track-bg, .track-w { position: absolute; left: 0; top: 50%; height: 8px; transform: translateY(-50%); pointer-events: none; }
+.track-bg { right: 0; background: var(--kk-rule); }
+.track-w { width: 0; background: var(--kk-gold); }
+.track-mark { position: absolute; left: 90%; top: 50%; width: 2px; height: 22px; transform: translate(-1px, -50%); background: var(--kk-ink); opacity: .75; pointer-events: none; }
+.track input { position: relative; width: 100%; height: 44px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; }
+.track input::-webkit-slider-runnable-track { height: 8px; background: transparent; }
+.track input::-moz-range-track { height: 8px; background: transparent; }
+.track input::-webkit-slider-thumb { -webkit-appearance: none; width: 6px; height: 26px; margin-top: -9px; background: var(--kk-ink); border: 0; border-radius: 1px; }
+.track input::-moz-range-thumb { width: 6px; height: 26px; background: var(--kk-ink); border: 0; border-radius: 1px; }
+.reads { margin: 14px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--kk-rule); }
+.reads div { padding: 12px 12px 0 0; min-width: 0; }
+.reads dt { font-size: 12px; color: var(--kk-muted); }
+.reads dd { margin: 4px 0 0; font-weight: 300; font-size: 26px; font-variant-numeric: tabular-nums; }
+.demo-actions { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+.kbtn { padding: 9px 14px; border-radius: 3px; border: 1px solid var(--kk-muted); background: transparent; color: var(--kk-ink); font: 500 13px var(--sans); cursor: pointer; }
+.kbtn:hover { border-color: var(--kk-gold); color: var(--kk-gold); }
+.server { margin-top: 12px; min-height: 1.5em; font-size: 13px; color: var(--kk-gold); overflow-wrap: anywhere; }
+
+/* incident log */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 8px 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,.4); background: transparent; color: var(--fg); font: 500 13px var(--sans); cursor: pointer; display: inline-flex; gap: 8px; }
+.chip:hover { border-color: var(--yellow); color: var(--yellow); }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.chip .n { opacity: .55; font-variant-numeric: tabular-nums; }
+.log { margin-top: 18px; }
+.entry { display: grid; grid-template-columns: 5fr 4fr; gap: var(--g); padding-block: 22px; border-top: 1px solid var(--rule); }
+.entry .when { display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap; }
+.entry time { font-size: 28px; font-weight: 300; color: var(--fg-35); font-variant-numeric: tabular-nums; }
+.tag { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.tag.security { color: var(--sec); } .tag.production { color: var(--prod); } .tag.process { color: var(--proc); } .tag.layout { color: var(--lay); }
+.entry h3 { font-size: 20px; font-weight: 500; line-height: 1.25; margin-top: 8px; max-width: 26em; text-wrap: balance; }
+.entry p { font-size: 15px; line-height: 1.6; color: var(--fg-75); }
+.entry p + p { margin-top: 10px; }
+.entry .fix b { color: var(--yellow); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-right: 6px; }
+
+/* stats */
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--g); }
+.stats h3 { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-50); margin-bottom: 14px; }
+.stats ul { list-style: none; padding: 0; }
+.stats li { padding: 12px 0; border-top: 1px solid var(--rule); font-size: 15px; line-height: 1.5; }
+.stats .after li { color: var(--fg); }
+.stats .before li { color: var(--fg-50); }
+
+/* closing */
+.closing { margin-top: clamp(80px, 12vh, 160px); border-top: 1px solid var(--rule); padding-block: 22px 30px; display: grid; grid-template-columns: 5fr 4fr; gap: var(--g); align-items: end; }
+.closing .big { font-weight: 300; font-size: clamp(30px, 3.23vw, 62px); line-height: 1; text-transform: uppercase; }
+.closing .big .fat { font-family: var(--fat); font-weight: 900; }
+.closing .right { display: grid; gap: 14px; justify-items: start; font-size: 13px; }
+.email { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.email span { font-size: 15px; user-select: all; }
+.closing .row { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 16px; flex-wrap: wrap; }
+
+/* ============ responsive ============ */
+@media (max-width: 1100px) {
+  .numbers { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 28px; }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  :root { --m: 20px; }
+  .home-grid { grid-template-columns: minmax(0, 1fr); row-gap: 32px; }
+  .headline, .work, .portrait { grid-column: auto; }
+  .headline { font-size: clamp(32px, 9vw, 52px); order: 1; }
+  .portrait { order: 2; width: 52%; max-width: 280px; justify-self: start; }
+  .work { order: 3; }
+  .work-list { font-size: clamp(30px, 8vw, 46px); }
+  .work-list:hover li { opacity: 1; }
+  .work-list li:hover { transform: none; }
+  .preview { display: none; }
+  .topbar { grid-template-columns: 1fr 1fr; row-gap: 16px; }
+  .heading, .intro-row, .section, .entry, .closing { grid-template-columns: minmax(0, 1fr); }
+  .meta { grid-template-columns: 1fr 1fr; }
+  .cta { justify-self: start; }
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .hero > .kk:not(:first-child) { display: none; }
+  .hero-tag { display: none; }
+  .stats { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .numbers div:last-child { grid-column: 1 / -1; }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .reads { grid-template-columns: minmax(0, 1fr); }
+  .reads div { display: flex; justify-content: space-between; align-items: baseline; padding-top: 8px; }
+  .screen { aspect-ratio: 16 / 8; }
+  .home-foot { flex-direction: column; align-items: flex-start; }
+}
+</style>
+
+<!-- ============================== HOME ============================== -->
+<main data-view="home">
+  <section class="home frame" aria-label="Introduction">
+    <div class="home-grid">
+      <h1 class="headline">Mudia<br>Imasuen,<br>filmmaker &amp;<br><span class="fat">designer</span><br>based in<br>Kaduna</h1>
+      <div class="work" id="work">
+        <p class="label">Selected work</p>
+        <ul class="work-list" id="work-list">
+          <li data-pv="kk"><a href="#kaykav-lms">KayKav LMS<sup class="ready">Case 01</sup></a></li>
+          <li data-pv="soon" data-name="Printivo" data-cat="E-commerce · Web-to-Print"><span class="item">Printivo<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="Speedy Transfer" data-cat="Fintech · Remittance App"><span class="item">Speedy Transfer<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="Esoko" data-cat="Agritech Platform"><span class="item">Esoko<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="Traderex" data-cat="Trading Platform"><span class="item">Traderex<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="WorkWise" data-cat="SaaS Product Design"><span class="item">WorkWise<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="TravelWahoo" data-cat="Travel Platform"><span class="item">TravelWahoo<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="eProd" data-cat="Production Tooling"><span class="item">eProd<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="Primer" data-cat="Brand Identity"><span class="item">Primer<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="Ebi" data-cat="Mobile App Design"><span class="item">Ebi<sup class="soon">Soon</sup></span></li>
+          <li data-pv="soon" data-name="Farmspeak" data-cat="Agritech Product"><span class="item">Farmspeak<sup class="soon">Soon</sup></span></li>
+        </ul>
+      </div>
+      <img class="portrait" src="data:image/webp;base64,{{PORTRAIT}}" alt="Portrait of Mudia Imasuen" width="604" height="821">
+    </div>
+    <div class="home-foot">
+      <p class="clock tn" id="clock">{WAT + --:--:--}</p>
+      <div class="right"><a href="https://github.com/pwadeveloper" target="_blank" rel="noopener">GitHub</a><a href="#kaykav-lms">Latest case study</a><span class="cmyk" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
+    </div>
+  </section>
+
+  <div class="preview" id="preview" aria-hidden="true">
+    <div class="pv pv-kk" data-pv="kk">
+      <div class="kk">
+        <div class="kk-bar"><span><b>Built, Not Prompted</b></span><span>Module 2</span></div>
+        <div class="kk-video"><div class="kk-play">▶</div></div>
+        <div class="kk-ctrl"><span class="kk-sq">▶</span><span class="kk-scrub"></span><span class="kk-tc">04:12</span></div>
+      </div>
+      <div class="kk"><div class="kk-body">
+        <div class="kk-row"><span class="ic">▶</span><span>Why agents drift</span><span class="ok">✓</span></div>
+        <div class="kk-row on"><span class="ic">▶</span><span>Your first prompt pack</span><span class="kk-small">11:48</span></div>
+        <div class="kk-row"><span class="ic">?</span><span>Module quiz</span><span class="kk-small">5 Qs</span></div>
+      </div></div>
+    </div>
+    <div class="pv pv-soon" data-pv="soon"><span>Case study in progress</span><div><b id="pv-name">Project</b><br><em id="pv-cat">Category</em></div></div>
+  </div>
+</main>
+
+<!-- ============================== CASE 01 ============================== -->
+<main data-view="kaykav-lms" hidden>
+  <article class="project frame">
+    <header class="topbar">
+      <a class="brand" href="#">Mudia Imasuen<sup>®</sup></a>
+      <div class="stack dim"><span>Project No. 01</span><span>2026</span></div>
+      <nav class="stack" aria-label="Site"><a href="#">Home</a><a href="#">Work</a><a href="https://github.com/pwadeveloper" target="_blank" rel="noopener">GitHub</a></nav>
+      <a class="contact" href="#contact">Get in Touch</a>
+    </header>
+
+    <div class="heading">
+      <div><p class="number">/01</p><h1 class="title">KayKav Academy LMS</h1></div>
+      <div class="meta">
+        <div><p class="meta-label">Part 1/11</p><p>EdTech · Learning Platform</p></div>
+        <div><p class="meta-label">Product Design &amp; Build Direction</p><p>Mudia Imasuen</p></div>
+        <a class="cta" href="https://learn.kaykav.academy" target="_blank" rel="noopener">View Live Project</a>
+      </div>
+    </div>
+
+    <div class="hero" aria-label="KayKav LMS screens, redrawn">
+      <div class="kk">
+        <div class="kk-bar"><span><b>Built, Not Prompted</b> · Module 2</span><span>Lesson 3 of 5</span></div>
+        <div class="kk-video"><div class="kk-play">▶</div></div>
+        <div class="kk-ctrl"><span class="kk-sq">▶</span><span class="kk-scrub"></span><span class="kk-tc">00:04:12 / 00:11:48</span><span class="kk-sq">HD</span></div>
+      </div>
+      <div class="kk"><div class="kk-body">
+        <span class="kk-small">Course outline</span>
+        <span class="kk-h">Module 2 · Your tools</span>
+        <div class="kk-progress"><span></span></div>
+        <div class="kk-row"><span class="ic">▶</span><span>Why agents drift</span><span class="ok">✓</span></div>
+        <div class="kk-row"><span class="ic">¶</span><span>Writing a Verify step</span><span class="ok">✓</span></div>
+        <div class="kk-row on"><span class="ic">▶</span><span>Your first prompt pack</span><span class="kk-small">11:48</span></div>
+        <div class="kk-row"><span class="ic">?</span><span>Module quiz</span><span class="kk-small">5 Qs</span></div>
+      </div></div>
+      <div class="kk"><div class="kk-cert">
+        <span class="kk-small">Certificate of completion</span>
+        <div class="rule"></div>
+        <span class="big">Student Name</span>
+        <span class="kk-small">has completed</span>
+        <span class="kk-h">Built, Not Prompted</span>
+        <div class="rule"></div>
+        <span class="kk-small">KV-XXXX-XXXX</span>
+      </div></div>
+      <span class="hero-tag">Screens redrawn from the product's design tokens</span>
+    </div>
+
+    <div class="intro-row">
+      <p class="location">Kaduna, Nigeria<br><span class="tn" id="kclock">--:--</span> (+1 WAT)</p>
+      <div class="intro">
+        <p>A course platform built with AI agents, and a record of every way it broke. KayKav Academy needed its own place to sell and teach courses to designers in Nigeria and Europe: paid video lessons, quizzes, certificates and local payments.</p>
+        <p>From 18 July to 14 October 2026 I designed the product and directed its build with Claude Code, one verified step at a time, across 203 commits. Every decision and failure went into a running log called STATUS.md. This is what that log taught me.</p>
+      </div>
+    </div>
+
+    <div class="numbers" aria-label="Project in numbers">
+      <div><b class="tn">7,915</b><span>Lines in the build log, STATUS.md</span></div>
+      <div><b class="tn">31</b><span>Database migrations, each classified before it shipped</span></div>
+      <div><b class="tn">1,443</b><span>Automated tests passing at the last recorded run</span></div>
+      <div><b class="tn">90</b><span>Access-rule cells checked against a real Postgres</span></div>
+      <div><b class="tn">1h 46m</b><span>Longest production outage. No sale was lost.</span></div>
+    </div>
+
+    <div class="body">
+      <section class="section" aria-labelledby="s1">
+        <div class="side"><p class="idx">/01</p><p class="kicker">The Brief</p></div>
+        <div class="main">
+          <h2 id="s1">A calm reading room that happens to have excellent video</h2>
+          <p>KayKav Academy is my school for creatives, with courses like <em>Built, Not Prompted</em>, which teaches non-developers to ship working software with AI tools. I had been running it as live cohorts. To sell courses on their own I needed a platform that took payment in naira, kept paid video behind a real lock, and gave students a certificate that meant they had done the work.</p>
+          <p>Off-the-shelf course tools fell short on two counts. Most can't take local payments well, and most treat a course as a video playlist. I wanted the reverse. The reference points were Domestika for craft video and the Interaction Design Foundation for structured, text-heavy rigour.</p>
+          <blockquote class="quote">The platform must feel like a calm reading environment that happens to have excellent video.<cite>PRD §1, the core tension</cite></blockquote>
+          <p>Before any code, I wrote the product requirements, eight feature specs and ten golden rules every line had to obey. Money is stored as whole kobo and cents, never decimals. Access is only ever granted by the payment provider's confirmation. Servers sit in Frankfurt, the latency midpoint between Lagos and Europe, while Cloudflare's edge serves the heavy video from close to each student.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="s2">
+        <div class="side"><p class="idx">/02</p><p class="kicker">The Method</p></div>
+        <div class="main">
+          <h2 id="s2">One verified step at a time, with a continuity log</h2>
+          <p>I don't write production code by hand. I design, specify and direct, and an AI agent writes the code. The risk with that setup is drift: step ten quietly builds on something the agent invented in step three. So I broke the build into a Prompt Pack of 24 steps, each with the same four parts.</p>
+          <ul>
+            <li><strong>Context.</strong> What's true now, and which spec governs this step.</li>
+            <li><strong>Build.</strong> Exactly what to produce.</li>
+            <li><strong>Verify.</strong> A command or test that proves it worked. If it fails, the next step doesn't start.</li>
+            <li><strong>Handoff.</strong> What the next step needs to know, written into STATUS.md in the same commit.</li>
+          </ul>
+          <p style="margin-top:18px">STATUS.md works like a script supervisor's continuity notes on a film set. Every take is logged, so whoever shoots tomorrow can match what was shot today. Any session, human or agent, starts by reading it, and each incident becomes a standing rule in the agent's instructions file, CLAUDE.md.</p>
+        </div>
+        <figure class="fig" aria-label="Commits per day, 18 July to 14 October 2026">
+          <div class="bars" id="bars"></div>
+          <div class="axis" id="axis"></div>
+          <figcaption>Commits to main per day, 18 Jul – 14 Oct 2026. 203 in total. The quiet September is the course being taught, not built.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="s3">
+        <div class="side"><p class="idx">/03</p><p class="kicker">Decisions</p></div>
+        <div class="main">
+          <h2 id="s3">Four problems with only one right answer</h2>
+          <p>Some choices look like matters of taste and aren't. I worked these out in the specs before building, wrote the reasoning down, and told the agent to implement them exactly. Each exists because the obvious approach quietly fails.</p>
+          <ul>
+            <li><strong>Progress is earned on the clock.</strong> A certificate needs 90% of each video watched. The platform keeps two numbers, where you are and how much you've actually watched, and only real playback capped by the server's own clock adds to the second.<span class="like">Like a taxi meter: it charges for the minutes the ride took, whatever the passenger says.</span></li>
+            <li><strong>Only the payment provider grants access.</strong> A "payment successful" redirect is a claim from the browser. Access waits for Paystack's signed webhook, and the handler is safe to receive twice.<span class="like">Like waiting for the bank alert before releasing goods, instead of trusting a screenshot of a transfer.</span></li>
+            <li><strong>Quiz answers never leave the server.</strong> The correct option sits in a column students' requests can't read, and a test scans what actually crosses the wire.<span class="like">Like printing the exam paper without the answer key stapled to the back.</span></li>
+            <li><strong>Access rules guard rows, not values.</strong> They decide whose record you can touch, not what you write into it. Progress and payment state are written only by trusted database functions.<span class="like">Like a hotel key card: it opens your room, and does nothing to stop you rewriting your own minibar bill.</span></li>
+          </ul>
+        </div>
+        <figure class="fig">
+          <div class="demo" id="scrub-demo">
+            <div class="demo-head"><h3>Try to cheat the player</h3><span>Simulation · 30× speed</span></div>
+            <p class="hint">Drag the playhead to the end. Your position jumps, but nothing counts as watched. Press play and the gold bar fills only with real playback. The lesson completes at the white mark, 90% of a 10-minute video.</p>
+            <div class="screen" aria-hidden="true"><div class="t"><span id="tc-pos">00:00</span> <small>/ 10:00</small></div><span class="done" id="done-badge" hidden>Lesson complete</span></div>
+            <div class="controls">
+              <button class="btn44" id="play-btn" type="button" aria-label="Play">▶</button>
+              <div class="track"><div class="track-bg"></div><div class="track-w" id="track-w"></div><div class="track-mark"></div><label class="sr" for="scrub">Playhead position</label><input type="range" id="scrub" min="0" max="600" step="1" value="0"></div>
+            </div>
+            <dl class="reads">
+              <div><dt>Where you are</dt><dd id="ro-pos">0s</dd></div>
+              <div><dt>Watched, earned</dt><dd id="ro-watched">0s</dd></div>
+              <div><dt>Completion</dt><dd id="ro-pct">0%</dd></div>
+            </dl>
+            <div class="demo-actions"><button class="kbtn" id="forge-btn" type="button">Send a forged heartbeat</button><button class="kbtn" id="reset-btn" type="button">Reset</button></div>
+            <p class="server" id="server-line" aria-live="polite"></p>
+          </div>
+          <figcaption>The real test fires 100 forged heartbeats in a burst, each claiming 30 seconds. The server credited 8 seconds, the time that had actually passed, instead of 3,000.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="s4">
+        <div class="side"><p class="idx">/04</p><p class="kicker">Design</p></div>
+        <div class="main">
+          <h2 id="s4">Two looks, one set of roles</h2>
+          <p>Components are named by the job they do, like surface, ink and action, never by a colour. That let the product offer two looks from one set of parts: the marketing site's brand-blue canvas, or blue chrome around white reading surfaces for long sessions. Gold is reserved for the one action on each screen, with a black label. Body text is set at 17px with generous line spacing, because most of a lesson is reading.</p>
+          <p>The video player was rebuilt with 44px gold control tiles and a quality menu, and it resumes where you stopped. The lesson outline breaks out of the centred grid to sit 32px from the window edge, so the reading column stays exactly 720px wide at every screen size.</p>
+          <ul>
+            <li><strong>Learning.</strong> Scrub-proof video progress, quizzes with rate-limited retakes, signed PDF certificates, search.</li>
+            <li><strong>Buying.</strong> Paystack checkout and webhook, guest checkout, receipts, bank transfer with an audit trail, discount codes.</li>
+            <li><strong>Running it.</strong> Course editor with autosave, direct-to-Cloudflare uploads, invites with bulk CSV enrolment, terms approved by counsel.</li>
+          </ul>
+        </div>
+        <figure class="fig">
+          <div class="tiles">
+            <div class="tile"><div class="kk" aria-hidden="true"><div class="kk-body">
+              <span class="kk-small">Module quiz · Question 3</span>
+              <span class="kk-h">What has to pass before the next step starts?</span>
+              <div class="kk-opt">The build</div>
+              <div class="kk-opt pick">The Verify block</div>
+              <div class="kk-opt">A code review</div>
+              <span class="kk-badge">Passed · 4 of 5</span>
+            </div></div><span class="cap">Quiz</span></div>
+            <div class="tile"><div class="kk" aria-hidden="true"><div class="kk-body">
+              <span class="kk-small">Lifetime access</span>
+              <span class="kk-h">Built, Not Prompted</span>
+              <div class="kk-btn">Pay with Paystack</div>
+              <div class="kk-btn ghost">Pay by bank transfer</div>
+              <span class="kk-small">Refund within 7 days if you've watched under 20% of the course.</span>
+            </div></div><span class="cap">Checkout</span></div>
+            <div class="tile"><div class="kk" aria-hidden="true"><div class="kk-body">
+              <span class="kk-small">Course outline</span>
+              <span class="kk-h">Module 2 · Your tools</span>
+              <div class="kk-progress"><span></span></div>
+              <div class="kk-row"><span class="ic">▶</span><span>Why agents drift</span><span class="ok">✓</span></div>
+              <div class="kk-row on"><span class="ic">▶</span><span>First prompt pack</span><span class="kk-small">11:48</span></div>
+            </div></div><span class="cap">Navigator</span></div>
+            <div class="tile"><div class="kk" aria-hidden="true"><div class="kk-cert">
+              <span class="kk-small">Certificate of completion</span>
+              <div class="rule"></div>
+              <span class="big">Student Name</span>
+              <span class="kk-h">Built, Not Prompted</span>
+              <div class="rule"></div>
+              <span class="kk-small">KV-XXXX-XXXX</span>
+            </div></div><span class="cap">Certificate</span></div>
+          </div>
+          <figcaption>Screens redrawn for this page from the product's design tokens.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="s5">
+        <div class="side"><p class="idx">/05</p><p class="kicker">What Broke</p></div>
+        <div class="main">
+          <h2 id="s5">The incident log</h2>
+          <p>Agent-built software fails in specific ways, and I wanted a record of them more than a clean story. These are thirteen entries from the log, rewritten for readers outside the codebase. Several reached real students. None cost anyone money or access.</p>
+        </div>
+        <figure class="fig">
+          <div class="filters" role="group" aria-label="Filter incidents">
+            <button class="chip" type="button" data-filter="all" aria-pressed="true">All <span class="n" data-count="all"></span></button>
+            <button class="chip" type="button" data-filter="security" aria-pressed="false">Security <span class="n" data-count="security"></span></button>
+            <button class="chip" type="button" data-filter="production" aria-pressed="false">Production <span class="n" data-count="production"></span></button>
+            <button class="chip" type="button" data-filter="process" aria-pressed="false">Process <span class="n" data-count="process"></span></button>
+            <button class="chip" type="button" data-filter="layout" aria-pressed="false">Layout <span class="n" data-count="layout"></span></button>
+          </div>
+          <div class="log" id="log">
+            <article class="entry" data-kind="layout"><div><div class="when"><time datetime="2026-10-14">14.10.26</time><span class="tag layout">Layout</span></div><h3>A pasted link broke every lesson page, and the author could never see it</h3></div><div>
+              <p>The editor wraps a long URL neatly. The student's reading view didn't, so the page overflowed sideways for every student. The admin only ever looks at the editor, the one screen where the bug can't appear. It was found by measuring a real page: 1,961px of content in a 1,280px window.</p>
+              <p class="fix"><b>Fix</b>One CSS line on the shared reading style fixed every lesson at once. Every layout change is now checked in a browser at 1280 and 390 wide.</p></div></article>
+            <article class="entry" data-kind="production"><div><div class="when"><time datetime="2026-10-08">08.10.26</time><span class="tag production">Production</span></div><h3>Checkout was down for 1 hour 46 minutes, with every check green</h3></div><div>
+              <p>A server-actions file exported a plain object as well as functions, which Next.js forbids. Typecheck, lint, the test suite and the production build all passed, twice, because Next only enforces that rule when a user's request first loads the file. No purchase was attempted in that window.</p>
+              <p class="fix"><b>Fix</b>A test that loads every server-actions file and asks the same question Next asks. Its very first run found a second broken file that nobody had looked at.</p></div></article>
+            <article class="entry" data-kind="security"><div><div class="when"><time datetime="2026-10-08">08.10.26</time><span class="tag security">Security</span></div><h3>Anyone on the internet could write rows into the payments table</h3></div><div>
+              <p>A database function's permissions were revoked from "everyone", which looks complete. On hosted Supabase, signed-out and signed-in users hold a separate default permission that survives that revoke. Every other function in the codebase named them explicitly; this one didn't.</p>
+              <p class="fix"><b>Fix</b>A migration applied by hand to production ahead of the code, with the before and after responses recorded: 400 before, 401 after.</p></div></article>
+            <article class="entry" data-kind="process"><div><div class="when"><time datetime="2026-10-07">07.10.26</time><span class="tag process">Process</span></div><h3>The same navigation bug shipped twice, past a comment warning about it</h3></div><div>
+              <p>A new admin page needs three edits: the page, its sidebar entry and its breadcrumb. The Students page shipped without the breadcrumb. A comment was added to prevent a repeat. The next page, Discounts, missed both the sidebar and the breadcrumb, with that comment sitting in the file.</p>
+              <p class="fix"><b>Fix</b>A test that reads the folder of admin pages and checks each one has a sidebar entry and a correct breadcrumb.</p></div></article>
+            <article class="entry" data-kind="production"><div><div class="when"><time datetime="2026-08-16">16.08.26</time><span class="tag production">Production</span></div><h3>Every invited student was told "Can't claim this invite" while already enrolled</h3></div><div>
+              <p>A database trigger claimed the invite the moment the student created their account, so the invite page then found it taken and showed an error. Six of the eight students who signed up that day had zero lesson progress, consistent with stopping at that screen. All of them did have access.</p>
+              <p class="fix"><b>Fix</b>The page now decides what to show from whether the visitor has access to the course, not from whether the invite was used.</p></div></article>
+            <article class="entry" data-kind="production"><div><div class="when"><time datetime="2026-08-15">15.08.26</time><span class="tag production">Production</span></div><h3>Every search result outside Module 1 led to a 404</h3></div><div>
+              <p>The query worked out each lesson's module number after filtering down to that one module, so every module ranked first. It was ranking a race with one runner. The test passed because it checked a value the test itself had typed in.</p>
+              <p class="fix"><b>Fix</b>Rank all of a course's modules first, then pick. Both search branches share one fragment so they can't drift.</p></div></article>
+            <article class="entry" data-kind="production"><div><div class="when"><time datetime="2026-08-08">08.08.26</time><span class="tag production">Production</span></div><h3>No certificate had ever been issued</h3></div><div>
+              <p>The certificate serial used a random-bytes function from a database extension. Locally the extension sat where the function could find it; on both hosted databases it lived in a different schema, so the first real graduate hit an error right after qualifying. The note said the extension was "already installed", which was true. Installed and visible turned out to be different things.</p>
+              <p class="fix"><b>Fix</b>Migration 0019, which also checks itself: it fails if it can't produce a well-formed serial.</p></div></article>
+            <article class="entry" data-kind="process"><div><div class="when"><time datetime="2026-08-08">08.08.26</time><span class="tag process">Process</span></div><h3>The agent deleted 196 lines of incident notes to undo a formatting change</h3></div><div>
+              <p>A code formatter reflowed STATUS.md, and the agent ran a git command to put it back. That command also wiped every uncommitted change in the file, including that day's incident write-up. There was no other copy, and it had to be rebuilt from the session transcript.</p>
+              <p class="fix"><b>Fix</b>A hard rule in the agent's instructions: never run a destructive git command on uncommitted work. Stash it instead, which can be undone.</p></div></article>
+            <article class="entry" data-kind="production"><div><div class="when"><time datetime="2026-08-08">08.08.26</time><span class="tag production">Production</span></div><h3>Quiz lessons crashed for students</h3></div><div>
+              <p>A database change that refused "mark as complete" on quiz lessons went to production before the app code that understood quizzes. The old app still showed the button, the new database said no, and students got a crash page. The migration was correct. The order was wrong.</p>
+              <p class="fix"><b>Fix</b>Deploy the quiz code, then a written ship-order rule: any migration that adds a refusal ships with the code that calls it, never ahead of it.</p></div></article>
+            <article class="entry" data-kind="security"><div><div class="when"><time datetime="2026-08-08">08.08.26</time><span class="tag security">Security</span></div><h3>A paying student could finish a video without watching it</h3></div><div>
+              <p>The progress table could still be written directly through Supabase's API, so a student with a valid login could send "watched 999,999 seconds, complete" for their own lesson. The access rule checked whose row it was and never looked at the numbers. The test matrix had recorded this as intended behaviour for three migrations.</p>
+              <p class="fix"><b>Fix</b>Migration 0014 removed direct write access. Three trusted database functions now write progress, and nothing else can.</p></div></article>
+            <article class="entry" data-kind="process"><div><div class="when"><time datetime="2026-08-07">07.08.26</time><span class="tag process">Process</span></div><h3>The test suite took 194 seconds and failed at random</h3></div><div>
+              <p>Tests ran against a hosted development database, so results depended on someone else's network and project health. Identical runs went green, red, then green.</p>
+              <p class="fix"><b>Fix</b>Tests now run against a local Postgres with a small compatibility layer for Supabase. About 11 seconds, and the same result every time.</p></div></article>
+            <article class="entry" data-kind="security"><div><div class="when"><time datetime="2026-07-26">26.07.26</time><span class="tag security">Security</span></div><h3>Production passwords ended up in a chat history</h3></div><div>
+              <p>While setting up the production database, credentials were pasted into the agent chat or generated inside it. Anything in a chat log has to be treated as exposed.</p>
+              <p class="fix"><b>Fix</b>Every affected credential was rotated outside the chat, and the site was checked to confirm the new ones were live.</p></div></article>
+            <article class="entry" data-kind="process"><div><div class="when"><time datetime="2026-07-18">18.07.26</time><span class="tag process">Process</span></div><h3>The first deploy failed before there was anything to deploy</h3></div><div>
+              <p>The database client connected the moment its file loaded, so building the site required a live database, and the hosting project had no environment variables at all.</p>
+              <p class="fix"><b>Fix</b>The client now connects on first use, so the build doesn't need a database.</p></div></article>
+          </div>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="s6">
+        <div class="side"><p class="idx">/06</p><p class="kicker">What I Keep</p></div>
+        <div class="main">
+          <h2 id="s6">Six rules the log earned</h2>
+          <p>Most incidents shared one shape: a check that existed somewhere my gates didn't look. The fixes that held were tests that go and ask, written against the whole folder or schema instead of the one file someone already suspected.</p>
+          <ul>
+            <li><strong>A comment is not a gate.</strong> A note saying "remember to add this" is only read by someone already in the file they forgot to open.<span class="from">From the admin navigation bug, twice</span></li>
+            <li><strong>Passing tests don't mean it compiles.</strong> 916 tests passed over a file that didn't compile. Types, lint and tests are three separate checks, run last.<span class="from">From 14.08.26</span></li>
+            <li><strong>Test with the data the rules hide.</strong> A hidden row comes back as an empty result with no error. Only a draft or someone else's record can catch it.<span class="from">From the same silent bug in three features</span></li>
+            <li><strong>Ship a refusal with its caller.</strong> Additive database changes can go first. Anything that refuses, constrains or revokes ships with the code that expects it.<span class="from">From the quiz crash</span></li>
+            <li><strong>Name the database before you trust it.</strong> Dev and production came to share a hostname, so every script prints the project's unique reference.<span class="from">From a dev scan briefly read as production</span></li>
+            <li><strong>Measure the rendered page.</strong> Component tests load no CSS. Look at the page at 1280 and 390, and measure what's inside each box.<span class="from">From the pasted-link overflow</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="s7">
+        <div class="side"><p class="idx">/07</p><p class="kicker">Outcome</p></div>
+        <div class="main">
+          <h2 id="s7">Live, selling, and still being logged</h2>
+          <p>The platform runs at learn.kaykav.academy and hosts the academy's courses, including <em>Built, Not Prompted</em>, the <em>Druids Alpha Masterclass</em> and <em>Building a Better Creative Business</em>. Students pay in naira through Paystack or by bank transfer, enrol by invite, take quizzes and download certificates. The terms and privacy policy were approved by counsel and are published from the same repository the app runs on.</p>
+          <p>The bigger result for me is the method. A designer can direct an agent to build software that handles real money, as long as the work is broken into steps that prove themselves and every failure becomes a rule the next step has to read. That is what I now teach in <em>Built, Not Prompted</em>.</p>
+          <p>If I started again, I'd write the guard tests for framework rules on day one, classify migrations from the first file, and keep every credential out of the chat from the first session.</p>
+        </div>
+        <div class="fig stats">
+          <div class="before"><h3>Before</h3><ul><li>Courses taught as live cohorts only</li><li>Test suite: 194 seconds, and flaky</li><li>Lessons learned kept in people's heads</li></ul></div>
+          <div class="after"><h3>After</h3><ul><li>Self-paced courses on our own platform, live since August 2026</li><li>Test suite: about 11 seconds, same result every time</li><li>Rules written into CLAUDE.md and enforced by tests</li></ul></div>
+        </div>
+      </section>
+    </div>
+  </article>
+</main>
+
+<footer class="closing frame" id="contact">
+  <p class="big">Let's make<br>something <span class="fat">good</span></p>
+  <div class="right">
+    <div class="email"><span id="email">sirmudiadavid@gmail.com</span><button class="cta" type="button" id="copy-btn">Copy email</button></div>
+    <div class="row"><span class="dim">Mudia Imasuen<sup>®</sup> · Kaduna, Nigeria · <span class="tn" id="fclock">--:--</span> WAT</span><span class="cmyk" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* routing */
+  var views = document.querySelectorAll('[data-view]');
+  function route() {
+    var n = (location.hash || '').slice(1);
+    var t = document.querySelector('[data-view="' + n + '"]') ? n : 'home';
+    if (!n || t === 'home') {
+      views.forEach(function (v) { v.hidden = v.getAttribute('data-view') !== 'home'; });
+      document.title = 'Osamudiamen Imasuen Portfolio';
+    } else {
+      views.forEach(function (v) { v.hidden = v.getAttribute('data-view') !== t; });
+      document.title = 'KayKav Academy LMS · Mudia Imasuen';
+    }
+    if (n !== 'contact') window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route); route();
+
+  /* clocks: visitor's zone on home (as on the original site), Kaduna on the case page */
+  var homeClock = document.getElementById('clock');
+  var kc = document.getElementById('kclock'), fc = document.getElementById('fclock');
+  function tick() {
+    var now = new Date();
+    try {
+      var tz = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' }).formatToParts(now).filter(function (p) { return p.type === 'timeZoneName'; })[0];
+      var t = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true }).format(now);
+      homeClock.textContent = '{' + (tz ? tz.value : '') + ' + ' + t + '}';
+      var k = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Africa/Lagos' }).format(now);
+      kc.textContent = k; fc.textContent = k;
+    } catch (e) {}
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* cursor-trailing preview on the work list */
+  var list = document.getElementById('work-list'), preview = document.getElementById('preview');
+  var tx = 0, ty = 0, px = 0, py = 0, seen = false, fine = window.matchMedia('(pointer: fine)').matches;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fine) {
+    document.addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; if (!seen) { px = tx; py = ty; seen = true; } });
+    (function loop() { px += (tx - px) * (reduce ? 1 : .14); py += (ty - py) * (reduce ? 1 : .14); preview.style.left = px + 'px'; preview.style.top = py + 'px'; requestAnimationFrame(loop); })();
+    list.querySelectorAll('li').forEach(function (li) {
+      li.addEventListener('mouseenter', function () {
+        var kind = li.getAttribute('data-pv');
+        preview.querySelectorAll('.pv').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-pv') === kind); });
+        if (kind === 'soon') { document.getElementById('pv-name').textContent = li.getAttribute('data-name'); document.getElementById('pv-cat').textContent = li.getAttribute('data-cat'); }
+        preview.classList.add('show');
+      });
+      li.addEventListener('mouseleave', function () { preview.classList.remove('show'); });
+    });
+  }
+
+  /* copy email */
+  var copyBtn = document.getElementById('copy-btn'), emailEl = document.getElementById('email');
+  copyBtn.addEventListener('click', function () {
+    var done = function () { copyBtn.textContent = 'Copied'; setTimeout(function () { copyBtn.textContent = 'Copy email'; }, 1800); };
+    var fallback = function () { var r = document.createRange(); r.selectNodeContents(emailEl); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = 'Selected, press copy'; };
+    try { navigator.clipboard.writeText(emailEl.textContent).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  /* build activity: real daily commit counts on main */
+  var counts = {"2026-07-18":23,"2026-07-19":6,"2026-07-20":5,"2026-07-26":8,"2026-07-27":5,"2026-08-06":3,"2026-08-07":16,"2026-08-08":12,"2026-08-09":5,"2026-08-10":5,"2026-08-11":5,"2026-08-12":12,"2026-08-13":18,"2026-08-14":18,"2026-08-15":21,"2026-08-16":2,"2026-08-21":1,"2026-08-22":2,"2026-08-28":1,"2026-09-22":2,"2026-10-07":8,"2026-10-08":9,"2026-10-09":2,"2026-10-13":5,"2026-10-14":9};
+  var bars = document.getElementById('bars'), axis = document.getElementById('axis');
+  var start = Date.UTC(2026, 6, 18), end = Date.UTC(2026, 9, 14), DAY = 86400000;
+  var days = Math.round((end - start) / DAY) + 1, max = 23, html = '', ax = '<span style="left:0">18 Jul</span>';
+  var months = { '2026-08-01': 'Aug', '2026-09-01': 'Sep', '2026-10-01': 'Oct' };
+  for (var i = 0; i < days; i++) {
+    var k = new Date(start + i * DAY).toISOString().slice(0, 10), c = counts[k] || 0;
+    html += '<i class="' + (c ? '' : 'zero') + '" style="height:' + (c / max * 100) + '%" title="' + k + ': ' + c + ' commits"></i>';
+    if (months[k]) ax += '<span style="left:' + (i / days * 100) + '%">' + months[k] + '</span>';
+  }
+  ax += '<span style="right:0">14 Oct</span>';
+  bars.innerHTML = html + '<span class="peak" style="left:2.2%">23 commits on day one, the scaffold</span>';
+  axis.innerHTML = ax;
+
+  /* incident filters */
+  var entries = Array.prototype.slice.call(document.querySelectorAll('#log .entry')), chips = document.querySelectorAll('.chip');
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    var k = el.getAttribute('data-count');
+    el.textContent = k === 'all' ? entries.length : entries.filter(function (e) { return e.dataset.kind === k; }).length;
+  });
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var f = chip.getAttribute('data-filter');
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+      entries.forEach(function (e) { e.hidden = !(f === 'all' || e.dataset.kind === f); });
+    });
+  });
+
+  /* scrub demo */
+  var DUR = 600, SPEED = 30, NEED = 0.9, pos = 0, watched = 0, playing = false, last = 0, raf = 0;
+  var $ = function (id) { return document.getElementById(id); };
+  var scrub = $('scrub'), play = $('play-btn'), server = $('server-line');
+  function fmt(s) { s = Math.floor(s); var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+  function render() {
+    scrub.value = Math.round(pos);
+    $('tc-pos').textContent = fmt(pos);
+    $('ro-pos').textContent = Math.round(pos) + 's';
+    $('ro-watched').textContent = Math.round(watched) + 's';
+    var pct = Math.min(100, watched / DUR * 100);
+    $('ro-pct').textContent = Math.floor(pct) + '%';
+    $('track-w').style.width = pct + '%';
+    $('done-badge').hidden = watched / DUR < NEED;
+    play.textContent = playing ? '❚❚' : '▶';
+    play.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  }
+  function step(t) {
+    if (!playing) return;
+    var dt = Math.min((t - last) / 1000, .25); last = t;
+    var credit = Math.min(dt * SPEED, DUR - pos);
+    pos += credit; watched = Math.min(DUR, watched + credit);
+    if (pos >= DUR) { playing = false; server.textContent = 'Video ended.'; }
+    render();
+    if (playing) raf = requestAnimationFrame(step);
+  }
+  play.addEventListener('click', function () {
+    if (pos >= DUR) pos = 0;
+    playing = !playing;
+    if (playing) { server.textContent = 'Heartbeat every 10s · credited = min(claimed, real time elapsed)'; last = performance.now(); raf = requestAnimationFrame(step); }
+    render();
+  });
+  scrub.addEventListener('input', function () { pos = Number(scrub.value); server.textContent = 'Seek to ' + Math.round(pos) + 's · watched time unchanged'; render(); });
+  $('forge-btn').addEventListener('click', function () { server.textContent = 'POST /api/progress { watchedDelta: 999999 } → 400 · rejected, nothing written'; });
+  $('reset-btn').addEventListener('click', function () { playing = false; cancelAnimationFrame(raf); pos = 0; watched = 0; server.textContent = ''; render(); });
+  render();
+})();
+</script>
